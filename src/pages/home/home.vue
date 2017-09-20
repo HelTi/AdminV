@@ -102,7 +102,6 @@
   </div>
 </template>
 <script>
-
   export default {
     name:'home',
     data(){
@@ -116,9 +115,11 @@
 
   html{
     background-color: #f4f7ed;
+    height: 100vh;
   }
   .wrapper{
     background-color: #f4f7ed;
+    height: 100%;
   }
   #project{
     background-color: #ffffff;
