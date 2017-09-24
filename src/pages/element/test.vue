@@ -26,7 +26,7 @@
       <div class="row ">
         <div class="col-md-6">
           <button class="btn btn-sm" @click="setTestPro">改变name</button>
-          <button class="btn btn-sm">改变id</button>
+          <button class="btn btn-sm" @click="testStorage">改变id</button>
           <button class="btn btn-sm" @click="testFetch">testFetch</button>
         </div>
         <div class="col-md-6">
@@ -42,7 +42,7 @@
   import {mapState, mapGetters, mapMutations} from 'vuex'
   import fetch from '../../lib/fetch';
   import {testData, testPost} from '../../api/api'
-
+  import {Storage} from '../../lib/storage'
   export default {
     name: 'test',
     data() {
@@ -89,13 +89,17 @@
           console.log(res)
         })
       },
+      testStorage(){
+          console.log(Storage);
+          Storage.add('app','app localstorage text')
+      },
       ...mapMutations([
         'setTestPro'
       ])
     }
   }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
   .margin-b {
     margin-bottom: 30px;
   }

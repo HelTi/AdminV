@@ -42,7 +42,7 @@
     }
   }
 </script>
-<style>
+<style scoped>
   html, body {
     background-color: #d2d6de;
   }
