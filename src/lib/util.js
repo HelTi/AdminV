@@ -122,5 +122,19 @@ Cookies.config = {
 }
 Cookies.defaults = {};
 
+// debounce
+var run_now = true;
+var debounce = function(func,wait){
+  var timeout;
+  if(run_now){
+    func();
+    run_now=false;
+  }else{
+    return function(){
+      clearTimeout(timeout);
+      timeout = setTimeout(func,wait);
+    }
+  }
+}
 export {Cookies};
 
