@@ -5,6 +5,7 @@ import login from '@/pages/login/login'
 import home from '@/pages/home/home'
 import test from '@/pages/element/test'
 import url from '@/pages/url/url'
+import comp from '@/pages/comp/comp'
 Vue.use(Router)
 
 export default new Router({
@@ -28,6 +29,11 @@ export default new Router({
       path:'/url',
       name:'url',
       component:url
+    },
+    {
+      path:'/comp',
+      name:'comp',
+      component:comp
     }
   ]
 })
