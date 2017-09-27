@@ -1,98 +1,131 @@
-<template>
-  <label class="v-radio-wrapper v-radio-w-checked">
-    <span class="v-radio v-radio-checked">
-      <span class="v-radio-inner"></span>
-      <input  class="v-radio-input" type="radio"/>
-    </span>
-    <slot></slot>
-  </label>
-</template>
-<script>
-  export default {
-    name: 'vradio',
-    model:{
-      prop:'checked',
-      event:'change'
-    },
-    props:{
-      value:Number,
-      default:0
-    },
-    data() {
-      return {}
-    },
-    methods:{
-
-    }
-  }
-</script>
 <style lang="scss">
-  .v-radio-wrapper{
-    font-size: 12px;
-    vertical-align: middle;
-    display: inline-block;
-    position: relative;
-    white-space:nowrap;
-    margin-right: 8px;
-    cursor: pointer;
-
-    .v-radio{
-      display: inline-block;
-      margin-right: 4px;
-      white-space: nowrap;
-      outline: none;
-      position: relative;
-      line-height: 1;
-      vertical-align: middle;
-      cursor: pointer;
-    }
-  }
-  .v-radio-inner{
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    position: relative;
-    top: 0;
-    left: 0;
-    background-color: #fff;
-    border: 1px solid #dddee1;
-    border-radius: 50%;
-    transition: all .2s ease-in-out;
-    &:after{
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      left: 2px;
-      top: 2px;
-      border-radius: 6px;
-      display: table;
-      border-top: 0;
-      border-left: 0;
-      content: " ";
-      background-color: #2d8cf0;
+  .radio-component {
+    > input {
       opacity: 0;
-      transition: all .2s ease-in-out;
-      transform: scale(0);
-    }
-  }
-
-  .v-radio-input{
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left:0;
-    right: 0;
-    z-index: 1;
-    opacity: 0;
-    cursor: pointer;
-  }
-  /*v-radio-checked */
-  .v-radio-checked .v-radio-inner{
-    border-color: #2d8cf0 !important;
-    &:after{
-      opacity: 1 !important;
-      transform: scale(1);
-      transition: all .2s ease-in-out;
+      position: absolute;
+      + label > .input-box {
+        display: inline-block;
+        border: 1px solid #20a0ff;
+        border-radius: 50%;
+        margin: 0;
+        padding: 0;
+        width: 1em;
+        height: 1em;
+        background: #fff;
+        overflow: hidden;
+        vertical-align: -5%;
+        user-select: none;
+        > .input-box-circle {
+          display: block;
+          margin: 50%;
+          width: 0%;
+          height: 0%;
+          background: #20a0ff;
+          border-radius: 50%;
+          opacity: 0;
+          transition: width 0.15s ease-in, height 0.15s ease-in, margin 0.15s ease-in;
+        }
+      }
+      &:checked + label > .input-box > .input-box-circle {
+        opacity: 1;
+        margin: 22%;
+        width: 56%;
+        height: 56%;
+      }
+      &:focus + label > .input-box {
+        box-shadow: 0 0 2px 3px #73b9ff;
+      }
     }
   }
 </style>
+
+<template>
+  <div class="radio-component">
+    <input type="radio"
+           :id="id"
+           :name="name"
+           :value="value"
+           :class="className"
+           :required="required"
+           @change="onChange"
+           :checked="state">
+    <label :for="id">
+      <slot name="input-box">
+                <span class="input-box">
+                    <span class="input-box-circle"></span>
+                </span>
+      </slot>
+      <slot></slot>
+    </label>
+  </div>
+</template>
+
+<script>
+  export default {
+    model: {
+      prop: 'modelValue',
+      event: 'input'
+    },
+    props: {
+      id: {
+        type: String,
+        default: function () {
+          return 'radio-id-' + this._uid;
+        },
+      },
+      name: {
+        type: String,
+        default: null,
+      },
+      value: {
+        type: [String, Boolean],
+        default: '',
+      },
+      modelValue: {
+        type: [String, Boolean],
+        default: undefined,
+      },
+      className: {
+        type: String,
+        default: null,
+      },
+      checked: {
+        type: Boolean,
+        default: false,
+      },
+      required: {
+        type: Boolean,
+        default: false,
+      },
+      model: {}
+    },
+    computed: {
+      state () {
+        if (this.modelValue === undefined) {
+          return this.checked;
+        }
+        return this.modelValue === this.value;
+      }
+    },
+    methods: {
+      onChange() {
+        this.toggle();
+      },
+      toggle() {
+        this.$emit('input', this.state ? '' : this.value);
+      }
+    },
+    watch: {
+      checked(newValue) {
+        if (newValue !== this.state) {
+          this.toggle();
+        }
+      }
+    },
+    mounted() {
+      if (this.checked && !this.state) {
+        this.toggle();
+      }
+    },
+  }
+</script>

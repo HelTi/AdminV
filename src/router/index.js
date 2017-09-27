@@ -5,7 +5,8 @@ import login from '@/pages/login/login'
 import home from '@/pages/home/home'
 import test from '@/pages/element/test'
 import url from '@/pages/url/url'
-import comp from '@/pages/comp/comp'
+import mixin from '@/pages/mixin/mixin'
+
 Vue.use(Router)
 
 export default new Router({
@@ -16,24 +17,24 @@ export default new Router({
       component: home
     },
     {
-      path:'/login',
-      name:'login',
-      component:login
+      path: '/login',
+      name: 'login',
+      component: login
     },
     {
-      path:'/test',
-      name:'test',
-      component:test
+      path: '/test',
+      name: 'test',
+      component: test
     },
     {
-      path:'/url',
-      name:'url',
-      component:url
+      path: '/url',
+      name: 'url',
+      component: url
     },
     {
-      path:'/comp',
-      name:'comp',
-      component:comp
+      path: '/mixin',
+      name: 'mixin',
+      component: mixin
     }
   ]
 })

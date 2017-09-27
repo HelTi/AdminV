@@ -16,7 +16,7 @@ const checkHasPro = function (value, validList) {
   if (typeOf(validList) === 'object') {
     return checkObjPro(value, validList)
   } else {
-    return new Error('check your validListType');
+    throw new Error('check your validListType');
   }
 }
 
@@ -55,7 +55,7 @@ function deepCopy(data) {
   } else if (t === 'object') {
     o = {};
     for (let i in data) {
-      o[i] = deepCopy(data[i0])
+      o[i] = deepCopy(data[i])
     }
   } else {
     return data;

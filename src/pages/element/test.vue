@@ -35,6 +35,9 @@
           <!--<p>{{version}}</p>
           {{testPro.id}}-->
           <p>done:{{doneTodsCount}}</p>
+          <v-radio name="robot" value="yes" v-model="radioValue"></v-radio>
+          <v-radio name="robot" value="no" v-model="radioValue"></v-radio>
+          <p>{{radioValue}}</p>
         </div>
       </div>
     </div>
@@ -44,7 +47,8 @@
   import {mapState, mapGetters, mapMutations} from 'vuex'
   import fetch from '../../lib/fetch';
   import {testData, testPost} from '../../api/api'
-  import {Storage,Cookies} from '../../lib/util'
+  import {Storage, Cookies} from '../../lib/util'
+  import VRadio from '../../components/Radio/VRadio.vue'
 
   export default {
     name: 'test',
@@ -52,7 +56,8 @@
       return {
         msg: 'test',
         tDate: new Date(),
-        value3: new Date('2015-09-20')
+        value3: new Date('2015-09-20'),
+        radioValue:''
       }
     },
     computed: {
@@ -99,16 +104,17 @@
       ...mapMutations([
         'setTestPro'
       ]),
-      testCookie(){
-        Cookies('appCookie', 'appCookie', { expires: 7 });
+      testCookie() {
+        Cookies('appCookie', 'appCookie', {expires: 7});
       },
-      deleteCookie(){
+      deleteCookie() {
 
       }
-    }
+    },
+    components: {VRadio}
   }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
   .margin-b {
     margin-bottom: 30px;
   }
