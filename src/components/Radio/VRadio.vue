@@ -1,5 +1,8 @@
 <style lang="scss">
   .radio-component {
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
     > input {
       opacity: 0;
       position: absolute;

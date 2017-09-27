@@ -35,8 +35,8 @@
           <!--<p>{{version}}</p>
           {{testPro.id}}-->
           <p>done:{{doneTodsCount}}</p>
-          <v-radio name="robot" value="yes" v-model="radioValue"></v-radio>
-          <v-radio name="robot" value="no" v-model="radioValue"></v-radio>
+          <v-radio name="robot" value="yes" v-model="radioValue">yes</v-radio>
+          <v-radio name="robot" value="no" v-model="radioValue">no</v-radio>
           <p>{{radioValue}}</p>
         </div>
       </div>
