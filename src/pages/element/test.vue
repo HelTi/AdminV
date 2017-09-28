@@ -39,6 +39,7 @@
           <v-radio name="robot" value="no" v-model="radioValue">no</v-radio>
           <p>{{radioValue}}</p>
           <v-check-box></v-check-box>
+          <input-com v-model="Price"></input-com>
         </div>
       </div>
     </div>
@@ -51,6 +52,7 @@
   import {Storage, Cookies} from '../../lib/util'
   import VRadio from '../../components/Radio/VRadio.vue'
   import VCheckBox from '../../components/Checkbox/VCheckBox.vue'
+  import InputCom from '../../components/InputCom/InputCom.vue'
 
   export default {
     name: 'test',
@@ -60,7 +62,8 @@
         tDate: new Date(),
         value3: new Date('2015-09-20'),
         radioValue:'',
-        rcalss:'isActive'
+        rcalss:'isActive',
+        Price:''
       }
     },
     computed: {
@@ -114,7 +117,7 @@
 
       }
     },
-    components: {VRadio,VCheckBox}
+    components: {VRadio,VCheckBox,InputCom}
   }
 </script>
 <style lang="scss">
