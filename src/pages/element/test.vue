@@ -35,9 +35,10 @@
           <!--<p>{{version}}</p>
           {{testPro.id}}-->
           <p>done:{{doneTodsCount}}</p>
-          <v-radio name="robot" value="yes" v-model="radioValue">yes</v-radio>
+          <v-radio :className="rcalss"  name="robot"  value="yes" v-model="radioValue">yes</v-radio>
           <v-radio name="robot" value="no" v-model="radioValue">no</v-radio>
           <p>{{radioValue}}</p>
+          <v-check-box></v-check-box>
         </div>
       </div>
     </div>
@@ -49,6 +50,7 @@
   import {testData, testPost} from '../../api/api'
   import {Storage, Cookies} from '../../lib/util'
   import VRadio from '../../components/Radio/VRadio.vue'
+  import VCheckBox from '../../components/Checkbox/VCheckBox.vue'
 
   export default {
     name: 'test',
@@ -57,7 +59,8 @@
         msg: 'test',
         tDate: new Date(),
         value3: new Date('2015-09-20'),
-        radioValue:''
+        radioValue:'',
+        rcalss:'isActive'
       }
     },
     computed: {
@@ -111,7 +114,7 @@
 
       }
     },
-    components: {VRadio}
+    components: {VRadio,VCheckBox}
   }
 </script>
 <style lang="scss">

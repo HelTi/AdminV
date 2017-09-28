@@ -1,82 +1,60 @@
 <style lang="scss">
-  .radio-component {
-    position: relative;
-    display: inline-block;
-    white-space: nowrap;
+  .checkbox-component {
     > input {
       opacity: 0;
       position: absolute;
-      + label {
-        &:hover {
-          cursor: pointer;
-        }
-      }
       + label > .input-box {
         display: inline-block;
         border: 1px solid #20a0ff;
-        border-radius: 50%;
+        border-radius: 14%;
         margin: 0;
         padding: 0;
         width: 1em;
         height: 1em;
         background: #fff;
         overflow: hidden;
-        vertical-align: middle;
+        vertical-align: -5%;
         user-select: none;
-        > .input-box-circle {
-          display: block;
-          margin: 50%;
-          width: 0%;
-          height: 0%;
-          background: #20a0ff;
-          border-radius: 50%;
-          opacity: 0;
-          transition: width 0.15s ease-in, height 0.15s ease-in, margin 0.15s ease-in;
+        > .input-box-tick {
+          width: 100%;
+          height: 100%;
+          > path {
+            opacity: 0;
+            stroke: #20a0ff;
+            stroke-width: 2.3px;
+            stroke-dashoffset: 20;
+            stroke-dasharray: 20;
+            transition: stroke-dashoffset 0.15s ease-in;
+          }
         }
       }
-      &:checked + label > .input-box > .input-box-circle {
+      &:checked + label > .input-box > .input-box-tick > path {
         opacity: 1;
-        margin: 22%;
-        width: 56%;
-        height: 56%;
+        stroke-dashoffset: 0;
       }
       &:focus + label > .input-box {
-        box-shadow: 0 0 1px 1px #73b9ff;
-      }
-    }
-  }
-  .isDisabled {
-    >input{
-      +label{
-        &:hover{
-          cursor: not-allowed !important;
-        }
-      }
-      +label > .input-box{
-        border: 1px solid #eeeeee !important;
-        > .input-box-circle {
-          background: #e0dada !important;
-        }
+        box-shadow: 0 0 1px 1px rgba(115, 185, 255, 0.69);
       }
     }
   }
 </style>
 
 <template>
-  <div class="radio-component">
-    <input type="radio"
+  <div class="checkbox-component">
+    <input type="checkbox"
            :id="id"
            :name="name"
            :value="value"
            :class="className"
            :required="required"
            @change="onChange"
-           :disabled="isDisabled"
            :checked="state">
     <label :for="id">
       <slot name="input-box">
                 <span class="input-box">
-                    <span class="input-box-circle"></span>
+                    <svg class="input-box-tick" viewBox="0 0 16 16">
+                        <path fill="none" d="M1.7,7.8l3.8,3.4l9-8.8"></path>
+                    </svg>
                 </span>
       </slot>
       <slot></slot>
@@ -94,14 +72,8 @@
       id: {
         type: String,
         default: function () {
-          return 'radio-id-' + this._uid;
+          return 'checkbox-id-' + this._uid;
         },
-      },
-      cid:{
-        type:String,
-        default: function () {
-          return 'c-id-' + this._uid;
-        }
       },
       name: {
         type: String,
@@ -109,10 +81,10 @@
       },
       value: {
         type: [String, Boolean],
-        default: '',
+        default: null,
       },
       modelValue: {
-        type: [String, Boolean],
+        type: [String, Boolean, Array],
         default: undefined,
       },
       className: {
@@ -127,18 +99,17 @@
         type: Boolean,
         default: false,
       },
-      isDisabled:{
-        type:Boolean,
-        default: false
-      },
       model: {}
     },
     computed: {
-      state() {
+      state () {
         if (this.modelValue === undefined) {
           return this.checked;
         }
-        return this.modelValue === this.value;
+        if (Array.isArray(this.modelValue)) {
+          return this.modelValue.indexOf(this.value) > -1;
+        }
+        return !!this.modelValue;
       }
     },
     methods: {
@@ -146,7 +117,18 @@
         this.toggle();
       },
       toggle() {
-        this.$emit('input', this.state ? '' : this.value);
+        let value;
+        if (Array.isArray(this.modelValue)) {
+          value = this.modelValue.slice(0);
+          if (this.state) {
+            value.splice(value.indexOf(this.value), 1);
+          } else {
+            value.push(this.value);
+          }
+        } else {
+          value = !this.state;
+        }
+        this.$emit('input', value);
       }
     },
     watch: {
@@ -161,5 +143,5 @@
         this.toggle();
       }
     },
-  }
+  };
 </script>
