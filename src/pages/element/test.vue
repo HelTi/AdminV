@@ -40,6 +40,10 @@
           <p>{{radioValue}}</p>
           <v-check-box></v-check-box>
           <input-com v-model="Price"></input-com>
+          <div>
+            <el-radio class="radio" v-model="radio" label="1">备选项</el-radio>
+            <el-radio class="radio" v-model="radio" label="2">备选项</el-radio>
+          </div>
         </div>
       </div>
     </div>
@@ -63,7 +67,8 @@
         value3: new Date('2015-09-20'),
         radioValue:'',
         rcalss:'isActive',
-        Price:''
+        Price:'',
+        radio:''
       }
     },
     computed: {

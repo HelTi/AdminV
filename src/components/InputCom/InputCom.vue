@@ -1,6 +1,6 @@
 <template>
   <div>
-    $:<input ref="input" :value="value"  v-on:input="updateValue($event.target.value)"/>
+    $:<input ref="input" :value="value" v-on:input="updateValue($event.target.value)"/>
   </div>
 </template>
 <script>
@@ -12,6 +12,7 @@
     props: ['value'],
     methods: {
       updateValue(value) {
+        console.log(this.$parent)
         var formattedValue = value.trim().slice(0, value.indexOf('.') === -1
           ? value.length
           : value.indexOf('.') + 3);
